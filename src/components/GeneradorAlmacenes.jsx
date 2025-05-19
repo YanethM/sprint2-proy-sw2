@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Download, FileText, CheckCircle, Building } from 'lucide-react';
 
 const GeneradorAlmacenes = () => {
   const [generando, setGenerando] = useState(false);
@@ -100,7 +99,7 @@ const GeneradorAlmacenes = () => {
       const link = document.createElement('a');
       link.href = url;
       link.download = filename;
-      link.setAttribute('style', 'display: none;');
+      link.style.display = 'none';
       
       // Forzar descarga
       document.body.appendChild(link);
@@ -133,7 +132,7 @@ const GeneradorAlmacenes = () => {
       const distribucionDepartamentos = {};
       const distribucionEstados = {};
 
-      for (let i = 1; i <= 2000; i++) {
+      for (let i = 1; i <= 10000; i++) {
         const idAlmacen = `ALM${i.toString().padStart(4, '0')}`;
         
         // Seleccionar ciudad aleatoria
@@ -185,7 +184,7 @@ const GeneradorAlmacenes = () => {
       }
 
       // Descargar el archivo
-      const filename = `almacenes_colombia_2000_registros_${new Date().getTime()}.csv`;
+      const filename = `almacenes_colombia_10000_registros_${new Date().getTime()}.csv`;
       const descargaExitosa = descargarCSV(csvContent, filename);
       
       if (descargaExitosa) {
@@ -193,7 +192,7 @@ const GeneradorAlmacenes = () => {
         setEstadisticas({
           departamentos: distribucionDepartamentos,
           estados: distribucionEstados,
-          totalRegistros: 2000,
+          totalRegistros: 10000,
           nombreArchivo: filename
         });
         
@@ -210,23 +209,25 @@ const GeneradorAlmacenes = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
-      <div className="text-center mb-8">
-        <Building className="mx-auto h-16 w-16 text-blue-600 mb-4" />
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+    <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '24px', backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
+      <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+        <div style={{ margin: '0 auto 16px', width: '64px', height: '64px', backgroundColor: '#2563eb', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', color: 'black' }}>
+          🏢
+        </div>
+        <h1 style={{ fontSize: '36px', fontWeight: 'bold', color: '#1f2937', marginBottom: '8px' }}>
           Generador de Datos de Almacenes
         </h1>
-        <p className="text-gray-600">
-          Genera 2000 registros de almacenes distribuidos por Colombia
+        <p style={{ color: '#6b7280' }}>
+          Genera 10,000 registros de almacenes distribuidos por Colombia
         </p>
       </div>
 
-      <div className="mb-8 p-6 bg-gray-50 rounded-lg">
-        <h2 className="text-xl font-semibold mb-4 flex items-center">
-          <FileText className="mr-2 h-5 w-5" />
+      <div style={{ marginBottom: '32px', padding: '24px', backgroundColor: '#f9fafb', borderRadius: '8px' }}>
+        <h2 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center' }}>
+          <span style={{ marginRight: '8px' }}>📄</span>
           Estructura del CSV
         </h2>
-        <div className="grid grid-cols-2 gap-2 text-sm text-gray-700">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', fontSize: '14px', color: '#374151' }}>
           <span>• ID del almacén</span>
           <span>• Nombre del almacén</span>
           <span>• Dirección</span>
@@ -244,58 +245,103 @@ const GeneradorAlmacenes = () => {
         </div>
       </div>
 
-      <div className="text-center">
+      <div style={{ textAlign: 'center' }}>
         <button
           onClick={generarDatos}
           disabled={generando}
-          className={`px-8 py-3 rounded-lg font-semibold text-white transition-all duration-200 ${
-            generando
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-blue-600 hover:bg-blue-700 hover:shadow-lg'
-          }`}
+          style={{
+            padding: '12px 32px',
+            borderRadius: '8px',
+            fontWeight: '600',
+            color: generando ? '#374151' : 'white',
+            border: 'none',
+            cursor: generando ? 'not-allowed' : 'pointer',
+            backgroundColor: generando ? '#9ca3af' : '#2563eb',
+            fontSize: '16px',
+            transition: 'all 0.2s',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto'
+          }}
+          onMouseOver={(e) => {
+            if (!generando) {
+              e.target.style.backgroundColor = '#1d4ed8';
+              e.target.style.boxShadow = '0 4px 12px rgba(37, 99, 235, 0.15)';
+            }
+          }}
+          onMouseOut={(e) => {
+            if (!generando) {
+              e.target.style.backgroundColor = '#2563eb';
+              e.target.style.boxShadow = 'none';
+            }
+          }}
         >
           {generando ? (
-            <span className="flex items-center">
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+            <>
+              <div style={{ 
+                width: '20px', 
+                height: '20px', 
+                border: '2px solid #374151', 
+                borderTop: '2px solid transparent', 
+                borderRadius: '50%', 
+                animation: 'spin 1s linear infinite', 
+                marginRight: '8px' 
+              }}></div>
+              <style>{`
+                @keyframes spin {
+                  0% { transform: rotate(0deg); }
+                  100% { transform: rotate(360deg); }
+                }
+              `}</style>
               Generando datos...
-            </span>
+            </>
           ) : (
-            <span className="flex items-center">
-              <Download className="mr-2 h-5 w-5" />
-              Generar y Descargar CSV
-            </span>
+            <>
+              <span style={{ marginRight: '8px' }}>⬇️</span>
+              Generar y Descargar CSV (10,000 registros)
+            </>
           )}
         </button>
 
         {generado && (
-          <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-            <div className="flex items-center justify-center mb-3">
-              <CheckCircle className="h-6 w-6 text-green-600 mr-2" />
-              <span className="text-green-800 font-semibold">
+          <div style={{ marginTop: '24px', padding: '16px', backgroundColor: '#ecfdf5', border: '1px solid #d1fae5', borderRadius: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px' }}>
+              <span style={{ color: '#059669', marginRight: '8px', fontSize: '20px' }}>✅</span>
+              <span style={{ color: '#047857', fontWeight: '600' }}>
                 ¡Archivo generado exitosamente!
               </span>
             </div>
-            <p className="text-green-700 text-sm mb-4">
-              Se ha descargado el archivo "{estadisticas?.nombreArchivo}" con 2000 registros
+            <p style={{ color: '#065f46', fontSize: '14px', marginBottom: '16px' }}>
+              Se ha descargado el archivo "{estadisticas?.nombreArchivo}" con 10,000 registros
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
               <button
                 onClick={generarDatos}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                style={{
+                  padding: '8px 24px',
+                  backgroundColor: '#2563eb',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '14px'
+                }}
+                onMouseOver={(e) => e.target.style.backgroundColor = '#1d4ed8'}
+                onMouseOut={(e) => e.target.style.backgroundColor = '#2563eb'}
               >
                 Generar otro archivo
               </button>
               
               <button
                 onClick={() => {
-                  // Regenerar datos y copiar al portapapeles como alternativa
                   setGenerando(true);
                   setTimeout(async () => {
                     const headers = ["id_almacen", "nombre_almacen", "direccion", "ciudad", "departamento", "pais", "codigo_postal", "latitud", "longitud", "gerente", "telefono", "email", "capacidad_m2", "estado"];
                     let csvContent = headers.join(';') + ';\n';
                     
-                    for (let i = 1; i <= 100; i++) { // Solo 100 para el portapapeles
+                    for (let i = 1; i <= 100; i++) {
                       const idAlmacen = `ALM${i.toString().padStart(4, '0')}`;
                       const ubicacion = randomChoice(ciudadesColombia);
                       const tipoAlmacen = randomChoice(tiposAlmacen);
@@ -332,7 +378,26 @@ const GeneradorAlmacenes = () => {
                   }, 100);
                 }}
                 disabled={generando}
-                className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50"
+                style={{
+                  padding: '8px 24px',
+                  backgroundColor: generando ? '#d1d5db' : '#6b7280',
+                  color: generando ? '#6b7280' : 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: generando ? 'not-allowed' : 'pointer',
+                  fontSize: '14px',
+                  opacity: generando ? 0.5 : 1
+                }}
+                onMouseOver={(e) => {
+                  if (!generando) {
+                    e.target.style.backgroundColor = '#4b5563';
+                  }
+                }}
+                onMouseOut={(e) => {
+                  if (!generando) {
+                    e.target.style.backgroundColor = '#6b7280';
+                  }
+                }}
               >
                 📋 Copiar muestra (100 registros)
               </button>
@@ -342,33 +407,33 @@ const GeneradorAlmacenes = () => {
       </div>
 
       {estadisticas && (
-        <div className="mt-8 grid md:grid-cols-2 gap-6">
-          <div className="p-4 bg-blue-50 rounded-lg">
-            <h3 className="font-semibold text-blue-900 mb-3">
+        <div style={{ marginTop: '32px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+          <div style={{ padding: '16px', backgroundColor: '#eff6ff', borderRadius: '8px' }}>
+            <h3 style={{ fontWeight: '600', color: '#1e40af', marginBottom: '12px' }}>
               Distribución por Estado
             </h3>
-            <div className="space-y-2">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {Object.entries(estadisticas.estados).map(([estado, count]) => (
-                <div key={estado} className="flex justify-between">
-                  <span className="capitalize">{estado}:</span>
-                  <span className="font-medium">{count} almacenes</span>
+                <div key={estado} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ textTransform: 'capitalize' }}>{estado}:</span>
+                  <span style={{ fontWeight: '500' }}>{count} almacenes</span>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="p-4 bg-green-50 rounded-lg">
-            <h3 className="font-semibold text-green-900 mb-3">
+          <div style={{ padding: '16px', backgroundColor: '#f0fdf4', borderRadius: '8px' }}>
+            <h3 style={{ fontWeight: '600', color: '#15803d', marginBottom: '12px' }}>
               Top 5 Departamentos
             </h3>
-            <div className="space-y-2">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {Object.entries(estadisticas.departamentos)
                 .sort((a, b) => b[1] - a[1])
                 .slice(0, 5)
                 .map(([departamento, count]) => (
-                  <div key={departamento} className="flex justify-between">
+                  <div key={departamento} style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span>{departamento}:</span>
-                    <span className="font-medium">{count} almacenes</span>
+                    <span style={{ fontWeight: '500' }}>{count} almacenes</span>
                   </div>
                 ))}
             </div>
