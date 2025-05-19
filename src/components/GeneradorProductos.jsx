@@ -5,7 +5,6 @@ const GeneradorProductos = () => {
   const [generado, setGenerado] = useState(false);
   const [estadisticas, setEstadisticas] = useState(null);
 
-  // Categorías de productos con sus respectivos productos
   const categorias = {
     Electrónicos: [
       {

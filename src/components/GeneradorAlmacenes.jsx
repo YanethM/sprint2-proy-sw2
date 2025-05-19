@@ -1,10 +1,4 @@
 import React, { useState } from 'react';
-
-// Importar los componentes de generadores
-// import GeneradorAlmacenes from './GeneradorAlmacenes';
-// import GeneradorProductos from './GeneradorProductos';
-
-// Aquí incluyo los componentes directamente para el ejemplo
 const GeneradorAlmacenes = ({ onNavigateToProducts }) => {
   const [generando, setGenerando] = useState(false);
   const [generado, setGenerado] = useState(false);
