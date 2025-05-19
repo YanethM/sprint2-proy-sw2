@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 
-const GeneradorAlmacenes = () => {
+// Importar los componentes de generadores
+// import GeneradorAlmacenes from './GeneradorAlmacenes';
+// import GeneradorProductos from './GeneradorProductos';
+
+// Aquí incluyo los componentes directamente para el ejemplo
+const GeneradorAlmacenes = ({ onNavigateToProducts }) => {
   const [generando, setGenerando] = useState(false);
   const [generado, setGenerado] = useState(false);
   const [estadisticas, setEstadisticas] = useState(null);
@@ -15,102 +20,40 @@ const GeneradorAlmacenes = () => {
     {ciudad: "Bucaramanga", departamento: "Santander", latMin: 7.000, latMax: 7.200, lonMin: -73.300, lonMax: -73.000},
     {ciudad: "Pereira", departamento: "Risaralda", latMin: 4.700, latMax: 4.900, lonMin: -75.800, lonMax: -75.600},
     {ciudad: "Armenia", departamento: "Quindío", latMin: 4.500, latMax: 4.600, lonMin: -75.800, lonMax: -75.600},
-    {ciudad: "Ibagué", departamento: "Tolima", latMin: 4.400, latMax: 4.500, lonMin: -75.300, lonMax: -75.100},
-    {ciudad: "Popayán", departamento: "Cauca", latMin: 2.400, latMax: 2.500, lonMin: -76.700, lonMax: -76.500},
-    {ciudad: "Pasto", departamento: "Nariño", latMin: 1.200, latMax: 1.300, lonMin: -77.400, lonMax: -77.200},
-    {ciudad: "Villavicencio", departamento: "Meta", latMin: 4.100, latMax: 4.200, lonMin: -73.700, lonMax: -73.500},
-    {ciudad: "Neiva", departamento: "Huila", latMin: 2.900, latMax: 3.000, lonMin: -75.400, lonMax: -75.200},
-    {ciudad: "Santa Marta", departamento: "Magdalena", latMin: 11.200, latMax: 11.300, lonMin: -74.300, lonMax: -74.100},
-    {ciudad: "Valledupar", departamento: "Cesar", latMin: 10.400, latMax: 10.500, lonMin: -73.300, lonMax: -73.100},
-    {ciudad: "Montería", departamento: "Córdoba", latMin: 8.700, latMax: 8.800, lonMin: -75.900, lonMax: -75.700},
-    {ciudad: "Sincelejo", departamento: "Sucre", latMin: 9.300, latMax: 9.400, lonMin: -75.400, lonMax: -75.200},
-    {ciudad: "Tunja", departamento: "Boyacá", latMin: 5.500, latMax: 5.600, lonMin: -73.400, lonMax: -73.200},
-    {ciudad: "Florencia", departamento: "Caquetá", latMin: 1.600, latMax: 1.700, lonMin: -75.700, lonMax: -75.500}
+    {ciudad: "Ibagué", departamento: "Tolima", latMin: 4.400, latMax: 4.500, lonMin: -75.300, lonMax: -75.100}
   ];
 
-  const nombresFemeninos = ["Ana", "Carolina", "Valentina", "Marcela", "Laura", "Sandra", "Maria", "Claudia", "Patricia", "Lucia", "Adriana", "Natalia", "Alejandra", "Isabella", "Sofia", "Juliana", "Camila", "Daniela", "Gabriela", "Andrea"];
-  const nombresMasculinos = ["Carlos", "Diego", "Fernando", "Ricardo", "Javier", "Andrés", "Miguel", "Juan", "Pedro", "Roberto", "Alejandro", "Sergio", "David", "Francisco", "Eduardo", "Gonzalo", "Antonio", "Manuel", "Rafael", "Sebastián"];
-  const apellidos = ["Ramírez", "Martínez", "Herrera", "Cárdenas", "López", "Duque", "Jaimes", "Ríos", "Méndez", "Hurtado", "García", "Rodríguez", "González", "Fernández", "Gómez", "Díaz", "Vargas", "Rojas", "Morales", "Castro", "Delgado", "Ruiz", "Medina", "Peña", "Jiménez", "Torres", "Flores", "Ramos", "Guerrero", "Cruz"];
+  const nombresFemeninos = ["Ana", "Carolina", "Valentina", "Marcela", "Laura"];
+  const nombresMasculinos = ["Carlos", "Diego", "Fernando", "Ricardo", "Javier"];
+  const apellidos = ["Ramírez", "Martínez", "Herrera", "Cárdenas", "López"];
+  const tiposAlmacen = ["Centro de Distribución", "Almacén Regional", "Bodega Principal"];
+  const descriptoresAlmacen = ["Principal", "Norte", "Sur", "Oriental", "Occidental"];
+  const estados = ["activo", "activo", "activo", "mantenimiento", "inactivo"];
 
-  const tiposAlmacen = [
-    "Centro de Distribución",
-    "Almacén Regional",
-    "Bodega Principal",
-    "Depósito Central",
-    "Centro Logístico",
-    "Almacén Industrial",
-    "Bodega Metropolitana",
-    "Centro de Operaciones",
-    "Depósito Urbano",
-    "Almacén Especializado"
-  ];
-
-  const descriptoresAlmacen = [
-    "Principal", "Norte", "Sur", "Oriental", "Occidental", "Central", "Metropolitano", 
-    "Industrial", "Comercial", "Express", "Premium", "Elite", "Master", "Pro", "Plus",
-    "Zona Franca", "Logístico", "Estratégico", "Corporativo", "Empresarial"
-  ];
-
-  const estados = ["activo", "activo", "activo", "activo", "activo", "mantenimiento", "activo", "inactivo"];
-
-  // Funciones auxiliares
-  const randomFloat = (min, max, decimals = 3) => {
-    return +(Math.random() * (max - min) + min).toFixed(decimals);
-  };
-
-  const randomInt = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
-  const randomChoice = (array) => {
-    return array[Math.floor(Math.random() * array.length)];
-  };
-
-  const generarEmail = (nombre, apellido) => {
-    const nombreLimpio = nombre.toLowerCase()
-      .replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i')
-      .replace(/ó/g, 'o').replace(/ú/g, 'u').replace(/ñ/g, 'n');
-    const apellidoLimpio = apellido.toLowerCase()
-      .replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i')
-      .replace(/ó/g, 'o').replace(/ú/g, 'u').replace(/ñ/g, 'n');
-    return `${nombreLimpio.charAt(0)}${apellidoLimpio}@logistica.com`;
-  };
-
+  const randomFloat = (min, max, decimals = 3) => +(Math.random() * (max - min) + min).toFixed(decimals);
+  const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+  const randomChoice = (array) => array[Math.floor(Math.random() * array.length)];
+  const generarEmail = (nombre, apellido) => `${nombre.toLowerCase().charAt(0)}${apellido.toLowerCase()}@logistica.com`;
   const generarDireccion = () => {
-    const tipoVia = randomChoice(['Calle', 'Carrera', 'Avenida', 'Diagonal', 'Transversal']);
-    const numero1 = randomInt(1, 150);
-    const numero2 = randomInt(1, 99);
-    const numero3 = randomInt(1, 150);
-    return `${tipoVia} ${numero1} #${numero2}-${numero3}`;
+    const tipoVia = randomChoice(['Calle', 'Carrera', 'Avenida']);
+    return `${tipoVia} ${randomInt(1, 150)} #${randomInt(1, 99)}-${randomInt(1, 150)}`;
   };
 
   const descargarCSV = (csvContent, filename) => {
     try {
-      // Crear el blob con BOM para caracteres especiales
       const BOM = '\uFEFF';
-      const blob = new Blob([BOM + csvContent], { 
-        type: 'text/csv;charset=utf-8;' 
-      });
-      
-      // Crear URL temporal
+      const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
-      
-      // Crear elemento de descarga
       const link = document.createElement('a');
       link.href = url;
       link.download = filename;
       link.style.display = 'none';
-      
-      // Forzar descarga
       document.body.appendChild(link);
       link.click();
-      
-      // Limpiar
       setTimeout(() => {
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
       }, 100);
-      
       return true;
     } catch (error) {
       console.error('Error al descargar archivo:', error);
@@ -123,86 +66,55 @@ const GeneradorAlmacenes = () => {
     setGenerado(false);
     
     try {
-      // Simular loading
       await new Promise(resolve => setTimeout(resolve, 500));
-
       const headers = ["id_almacen", "nombre_almacen", "direccion", "ciudad", "departamento", "pais", "codigo_postal", "latitud", "longitud", "gerente", "telefono", "email", "capacidad_m2", "estado"];
-      
       let csvContent = headers.join(';') + ';\n';
       const distribucionDepartamentos = {};
       const distribucionEstados = {};
 
       for (let i = 1; i <= 10000; i++) {
         const idAlmacen = `ALM${i.toString().padStart(4, '0')}`;
-        
-        // Seleccionar ciudad aleatoria
         const ubicacion = randomChoice(ciudadesColombia);
-        
-        // Generar nombre del almacén
-        const tipoAlmacen = randomChoice(tiposAlmacen);
-        const descriptor = randomChoice(descriptoresAlmacen);
-        const nombreAlmacen = `${tipoAlmacen} ${descriptor}`;
-        
-        // Generar dirección
+        const nombreAlmacen = `${randomChoice(tiposAlmacen)} ${randomChoice(descriptoresAlmacen)}`;
         const direccion = generarDireccion();
-        
-        // Datos de ubicación
         const ciudad = ubicacion.ciudad;
         const departamento = ubicacion.departamento;
-        const pais = "Colombia";
         const codigoPostal = randomInt(100000, 999999);
-        
-        // Coordenadas dentro del rango de la ciudad
         const latitud = randomFloat(ubicacion.latMin, ubicacion.latMax);
         const longitud = randomFloat(ubicacion.lonMin, ubicacion.lonMax);
-        
-        // Generar gerente
         const genero = Math.random() > 0.5 ? 'F' : 'M';
         const nombre = genero === 'F' ? randomChoice(nombresFemeninos) : randomChoice(nombresMasculinos);
         const apellido = randomChoice(apellidos);
         const gerente = `${nombre} ${apellido}`;
-        
-        // Generar teléfono (formato colombiano)
         const telefono = `57${randomInt(300, 350)}${randomInt(1000000, 9999999)}`;
-        
-        // Generar email
         const email = generarEmail(nombre, apellido);
-        
-        // Capacidad en m2
         const capacidadM2 = randomInt(1000, 10000);
-        
-        // Estado
         const estado = randomChoice(estados);
         
-        // Estadísticas
         distribucionDepartamentos[departamento] = (distribucionDepartamentos[departamento] || 0) + 1;
         distribucionEstados[estado] = (distribucionEstados[estado] || 0) + 1;
         
-        // Agregar fila al CSV
-        const fila = [idAlmacen, nombreAlmacen, direccion, ciudad, departamento, pais, codigoPostal, latitud, longitud, gerente, telefono, email, capacidadM2, estado];
+        const fila = [idAlmacen, nombreAlmacen, direccion, ciudad, departamento, "Colombia", codigoPostal, latitud, longitud, gerente, telefono, email, capacidadM2, estado];
         csvContent += fila.join(';') + ';\n';
       }
 
-      // Descargar el archivo
       const filename = `almacenes_colombia_10000_registros_${new Date().getTime()}.csv`;
       const descargaExitosa = descargarCSV(csvContent, filename);
       
       if (descargaExitosa) {
-        // Configurar estadísticas
         setEstadisticas({
           departamentos: distribucionDepartamentos,
           estados: distribucionEstados,
           totalRegistros: 10000,
           nombreArchivo: filename
         });
-        
         setGenerado(true);
       } else {
-        alert('Error al descargar el archivo. Tu navegador podría estar bloqueando las descargas.');
+        alert('Error al descargar el archivo.');
       }
     } catch (error) {
       console.error('Error generando datos:', error);
-      alert('Error al generar los datos. Por favor intenta de nuevo.');
+      alert('Error al generar los datos.');
     } finally {
       setGenerando(false);
     }
@@ -220,29 +132,6 @@ const GeneradorAlmacenes = () => {
         <p style={{ color: '#6b7280' }}>
           Genera 10,000 registros de almacenes distribuidos por Colombia
         </p>
-      </div>
-
-      <div style={{ marginBottom: '32px', padding: '24px', backgroundColor: '#f9fafb', borderRadius: '8px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center' }}>
-          <span style={{ marginRight: '8px' }}>📄</span>
-          Estructura del CSV
-        </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', fontSize: '14px', color: '#374151' }}>
-          <span>• ID del almacén</span>
-          <span>• Nombre del almacén</span>
-          <span>• Dirección</span>
-          <span>• Ciudad</span>
-          <span>• Departamento</span>
-          <span>• País</span>
-          <span>• Código postal</span>
-          <span>• Coordenadas (latitud/longitud)</span>
-          <span>• Nombre del gerente</span>
-          <span>• Teléfono</span>
-          <span>• Email</span>
-          <span>• Capacidad en m²</span>
-          <span>• Estado (activo/mantenimiento/inactivo)</span>
-          <span>• 20 ciudades principales de Colombia</span>
-        </div>
       </div>
 
       <div style={{ textAlign: 'center' }}>
@@ -264,18 +153,6 @@ const GeneradorAlmacenes = () => {
             justifyContent: 'center',
             margin: '0 auto'
           }}
-          onMouseOver={(e) => {
-            if (!generando) {
-              e.target.style.backgroundColor = '#1d4ed8';
-              e.target.style.boxShadow = '0 4px 12px rgba(37, 99, 235, 0.15)';
-            }
-          }}
-          onMouseOut={(e) => {
-            if (!generando) {
-              e.target.style.backgroundColor = '#2563eb';
-              e.target.style.boxShadow = 'none';
-            }
-          }}
         >
           {generando ? (
             <>
@@ -288,12 +165,7 @@ const GeneradorAlmacenes = () => {
                 animation: 'spin 1s linear infinite', 
                 marginRight: '8px' 
               }}></div>
-              <style>{`
-                @keyframes spin {
-                  0% { transform: rotate(0deg); }
-                  100% { transform: rotate(360deg); }
-                }
-              `}</style>
+              <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
               Generando datos...
             </>
           ) : (
@@ -328,120 +200,318 @@ const GeneradorAlmacenes = () => {
                   cursor: 'pointer',
                   fontSize: '14px'
                 }}
-                onMouseOver={(e) => e.target.style.backgroundColor = '#1d4ed8'}
-                onMouseOut={(e) => e.target.style.backgroundColor = '#2563eb'}
               >
                 Generar otro archivo
               </button>
-              
-              <button
-                onClick={() => {
-                  setGenerando(true);
-                  setTimeout(async () => {
-                    const headers = ["id_almacen", "nombre_almacen", "direccion", "ciudad", "departamento", "pais", "codigo_postal", "latitud", "longitud", "gerente", "telefono", "email", "capacidad_m2", "estado"];
-                    let csvContent = headers.join(';') + ';\n';
-                    
-                    for (let i = 1; i <= 100; i++) {
-                      const idAlmacen = `ALM${i.toString().padStart(4, '0')}`;
-                      const ubicacion = randomChoice(ciudadesColombia);
-                      const tipoAlmacen = randomChoice(tiposAlmacen);
-                      const descriptor = randomChoice(descriptoresAlmacen);
-                      const nombreAlmacen = `${tipoAlmacen} ${descriptor}`;
-                      const direccion = generarDireccion();
-                      const ciudad = ubicacion.ciudad;
-                      const departamento = ubicacion.departamento;
-                      const pais = "Colombia";
-                      const codigoPostal = randomInt(100000, 999999);
-                      const latitud = randomFloat(ubicacion.latMin, ubicacion.latMax);
-                      const longitud = randomFloat(ubicacion.lonMin, ubicacion.lonMax);
-                      const genero = Math.random() > 0.5 ? 'F' : 'M';
-                      const nombre = genero === 'F' ? randomChoice(nombresFemeninos) : randomChoice(nombresMasculinos);
-                      const apellido = randomChoice(apellidos);
-                      const gerente = `${nombre} ${apellido}`;
-                      const telefono = `57${randomInt(300, 350)}${randomInt(1000000, 9999999)}`;
-                      const email = generarEmail(nombre, apellido);
-                      const capacidadM2 = randomInt(1000, 10000);
-                      const estado = randomChoice(estados);
-                      
-                      const fila = [idAlmacen, nombreAlmacen, direccion, ciudad, departamento, pais, codigoPostal, latitud, longitud, gerente, telefono, email, capacidadM2, estado];
-                      csvContent += fila.join(';') + ';\n';
-                    }
-                    
-                    try {
-                      await navigator.clipboard.writeText(csvContent);
-                      alert('¡100 registros de muestra copiados al portapapeles! Puedes pegarlos en Excel o un editor de texto.');
-                    } catch (err) {
-                      console.error('Error al copiar al portapapeles:', err);
-                      alert('Error al copiar al portapapeles. Tu navegador podría no soportar esta función.');
-                    }
-                    setGenerando(false);
-                  }, 100);
-                }}
-                disabled={generando}
-                style={{
-                  padding: '8px 24px',
-                  backgroundColor: generando ? '#d1d5db' : '#6b7280',
-                  color: generando ? '#6b7280' : 'white',
-                  border: 'none',
-                  borderRadius: '8px',
-                  cursor: generando ? 'not-allowed' : 'pointer',
-                  fontSize: '14px',
-                  opacity: generando ? 0.5 : 1
-                }}
-                onMouseOver={(e) => {
-                  if (!generando) {
-                    e.target.style.backgroundColor = '#4b5563';
-                  }
-                }}
-                onMouseOut={(e) => {
-                  if (!generando) {
-                    e.target.style.backgroundColor = '#6b7280';
-                  }
-                }}
-              >
-                📋 Copiar muestra (100 registros)
-              </button>
+
+              {onNavigateToProducts && (
+                <button
+                  onClick={onNavigateToProducts}
+                  style={{
+                    padding: '8px 24px',
+                    backgroundColor: '#16a34a',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    fontSize: '14px',
+                    marginTop: '8px'
+                  }}
+                >
+                  📦 Ir a Generar Productos
+                </button>
+              )}
             </div>
           </div>
         )}
       </div>
+    </div>
+  );
+};
 
-      {estadisticas && (
-        <div style={{ marginTop: '32px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
-          <div style={{ padding: '16px', backgroundColor: '#eff6ff', borderRadius: '8px' }}>
-            <h3 style={{ fontWeight: '600', color: '#1e40af', marginBottom: '12px' }}>
-              Distribución por Estado
-            </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {Object.entries(estadisticas.estados).map(([estado, count]) => (
-                <div key={estado} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ textTransform: 'capitalize' }}>{estado}:</span>
-                  <span style={{ fontWeight: '500' }}>{count} almacenes</span>
-                </div>
-              ))}
-            </div>
-          </div>
+const GeneradorProductos = ({ onNavigateToAlmacenes }) => {
+  const [generando, setGenerando] = useState(false);
+  const [generado, setGenerado] = useState(false);
+  const [estadisticas, setEstadisticas] = useState(null);
 
-          <div style={{ padding: '16px', backgroundColor: '#f0fdf4', borderRadius: '8px' }}>
-            <h3 style={{ fontWeight: '600', color: '#15803d', marginBottom: '12px' }}>
-              Top 5 Departamentos
-            </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {Object.entries(estadisticas.departamentos)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 5)
-                .map(([departamento, count]) => (
-                  <div key={departamento} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span>{departamento}:</span>
-                    <span style={{ fontWeight: '500' }}>{count} almacenes</span>
-                  </div>
-                ))}
-            </div>
-          </div>
+  // Datos simplificados para el ejemplo
+  const categorias = {
+    "Electrónicos": [
+      { nombre: "Televisor LED 55\"", sku_prefix: "ELE-TV", precio_min: 1200000, precio_max: 2500000, peso_min: 15, peso_max: 25, dimensiones: "55x33x8", fragil: true }
+    ],
+    "Lácteos": [
+      { nombre: "Leche Entera 1L", sku_prefix: "LAC-LCH", precio_min: 3500, precio_max: 5500, peso_min: 1, peso_max: 1.1, dimensiones: "10x6x20", fragil: false, refrigeracion: true }
+    ]
+  };
+
+  const proveedores = ["PROV001", "PROV002", "PROV003"];
+  const estados = ["activo", "inactivo", "agotado"];
+
+  const randomFloat = (min, max, decimals = 2) => +(Math.random() * (max - min) + min).toFixed(decimals);
+  const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+  const randomChoice = (array) => array[Math.floor(Math.random() * array.length)];
+
+  const descargarCSV = (csvContent, filename) => {
+    try {
+      const BOM = '\uFEFF';
+      const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }, 100);
+      return true;
+    } catch (error) {
+      console.error('Error al descargar archivo:', error);
+      return false;
+    }
+  };
+
+  const generarDatos = async () => {
+    setGenerando(true);
+    setGenerado(false);
+    
+    try {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const headers = ["id_producto", "id_almacen", "nombre_producto", "categoria", "descripcion", "sku", "codigo_barras", "precio_unitario", "cantidad_stock", "nivel_reorden", "ultima_reposicion", "fecha_vencimiento", "id_proveedor", "peso_kg", "dimensiones_cm", "es_fragil", "requiere_refrigeracion", "estado"];
+      let csvContent = headers.join(';') + ';\n';
+      const distribucionCategorias = {};
+      const distribucionEstados = {};
+
+      for (let i = 1; i <= 10000; i++) {
+        const idProducto = `P${i.toString().padStart(4, '0')}`;
+        const idAlmacen = `ALM${randomInt(1, 2000).toString().padStart(4, '0')}`;
+        const categoriasKeys = Object.keys(categorias);
+        const categoriaSeleccionada = randomChoice(categoriasKeys);
+        const productosCategoria = categorias[categoriaSeleccionada];
+        const productoSeleccionado = randomChoice(productosCategoria);
+        
+        const nombreProducto = productoSeleccionado.nombre;
+        const categoria = categoriaSeleccionada;
+        const descripcion = `${nombreProducto} de alta calidad`;
+        const sku = `${productoSeleccionado.sku_prefix}-${randomInt(100, 999)}`;
+        const codigoBarras = Math.floor(Math.random() * 9000000000000) + 1000000000000;
+        const precioUnitario = randomInt(productoSeleccionado.precio_min, productoSeleccionado.precio_max);
+        const cantidadStock = randomInt(20, 500);
+        const nivelReorden = Math.floor(cantidadStock * 0.2);
+        const ultimaReposicion = new Date().toLocaleDateString('es-CO');
+        const fechaVencimiento = categoria === "Lácteos" ? new Date(Date.now() + 15*24*60*60*1000).toLocaleDateString('es-CO') : "";
+        const idProveedor = randomChoice(proveedores);
+        const pesoKg = randomFloat(productoSeleccionado.peso_min, productoSeleccionado.peso_max);
+        const dimensionesCm = productoSeleccionado.dimensiones;
+        const esFragil = productoSeleccionado.fragil || false;
+        const requiereRefrigeracion = productoSeleccionado.refrigeracion || false;
+        const estado = randomChoice(estados);
+        
+        distribucionCategorias[categoria] = (distribucionCategorias[categoria] || 0) + 1;
+        distribucionEstados[estado] = (distribucionEstados[estado] || 0) + 1;
+        
+        const fila = [idProducto, idAlmacen, nombreProducto, categoria, descripcion, sku, codigoBarras, precioUnitario, cantidadStock, nivelReorden, ultimaReposicion, fechaVencimiento, idProveedor, pesoKg, dimensionesCm, esFragil, requiereRefrigeracion, estado];
+        csvContent += fila.join(';') + ';\n';
+      }
+
+      const filename = `productos_almacenes_10000_registros_${new Date().getTime()}.csv`;
+      const descargaExitosa = descargarCSV(csvContent, filename);
+      
+      if (descargaExitosa) {
+        setEstadisticas({
+          categorias: distribucionCategorias,
+          estados: distribucionEstados,
+          totalRegistros: 10000,
+          nombreArchivo: filename
+        });
+        setGenerado(true);
+      } else {
+        alert('Error al descargar el archivo.');
+      }
+    } catch (error) {
+      console.error('Error generando datos:', error);
+      alert('Error al generar los datos.');
+    } finally {
+      setGenerando(false);
+    }
+  };
+
+  return (
+    <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '24px', backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
+      <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+        <div style={{ margin: '0 auto 16px', width: '64px', height: '64px', backgroundColor: '#16a34a', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', color: 'white' }}>
+          📦
         </div>
+        <h1 style={{ fontSize: '36px', fontWeight: 'bold', color: '#1f2937', marginBottom: '8px' }}>
+          Generador de Productos para Almacenes
+        </h1>
+        <p style={{ color: '#6b7280' }}>
+          Genera 10,000 productos distribuidos entre los almacenes creados
+        </p>
+      </div>
+
+      <div style={{ textAlign: 'center' }}>
+        <button
+          onClick={generarDatos}
+          disabled={generando}
+          style={{
+            padding: '12px 32px',
+            borderRadius: '8px',
+            fontWeight: '600',
+            color: generando ? '#374151' : 'white',
+            border: 'none',
+            cursor: generando ? 'not-allowed' : 'pointer',
+            backgroundColor: generando ? '#9ca3af' : '#16a34a',
+            fontSize: '16px',
+            transition: 'all 0.2s',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto'
+          }}
+        >
+          {generando ? (
+            <>
+              <div style={{ 
+                width: '20px', 
+                height: '20px', 
+                border: '2px solid #374151', 
+                borderTop: '2px solid transparent', 
+                borderRadius: '50%', 
+                animation: 'spin 1s linear infinite', 
+                marginRight: '8px' 
+              }}></div>
+              <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+              Generando productos...
+            </>
+          ) : (
+            <>
+              <span style={{ marginRight: '8px' }}>⬇️</span>
+              Generar y Descargar CSV de Productos (10,000)
+            </>
+          )}
+        </button>
+
+        {generado && (
+          <div style={{ marginTop: '24px', padding: '16px', backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px' }}>
+              <span style={{ color: '#15803d', marginRight: '8px', fontSize: '20px' }}>✅</span>
+              <span style={{ color: '#15803d', fontWeight: '600' }}>
+                ¡Productos generados exitosamente!
+              </span>
+            </div>
+            <p style={{ color: '#14532d', fontSize: '14px', marginBottom: '16px' }}>
+              Se ha descargado el archivo "{estadisticas?.nombreArchivo}" con 10,000 productos
+            </p>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
+              <button
+                onClick={generarDatos}
+                style={{
+                  padding: '8px 24px',
+                  backgroundColor: '#16a34a',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '14px'
+                }}
+              >
+                Generar otro archivo de productos
+              </button>
+
+              {onNavigateToAlmacenes && (
+                <button
+                  onClick={onNavigateToAlmacenes}
+                  style={{
+                    padding: '8px 24px',
+                    backgroundColor: '#2563eb',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    fontSize: '14px',
+                    marginTop: '8px'
+                  }}
+                >
+                  🏢 Ir a Generar Almacenes
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Componente principal que maneja la navegación
+const AppGeneradores = () => {
+  const [vistaActual, setVistaActual] = useState('almacenes');
+
+  return (
+    <div style={{ minHeight: '100vh', backgroundColor: '#f3f4f6', padding: '20px' }}>
+      {/* Navegación principal */}
+      <div style={{ maxWidth: '1000px', margin: '0 auto', marginBottom: '30px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', backgroundColor: 'white', padding: '16px', borderRadius: '12px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+          <button
+            onClick={() => setVistaActual('almacenes')}
+            style={{
+              padding: '12px 24px',
+              backgroundColor: vistaActual === 'almacenes' ? '#2563eb' : '#f3f4f6',
+              color: vistaActual === 'almacenes' ? 'white' : '#374151',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: '600',
+              transition: 'all 0.2s',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}
+          >
+            🏢 Generar Almacenes
+          </button>
+          
+          <button
+            onClick={() => setVistaActual('productos')}
+            style={{
+              padding: '12px 24px',
+              backgroundColor: vistaActual === 'productos' ? '#16a34a' : '#f3f4f6',
+              color: vistaActual === 'productos' ? 'white' : '#374151',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: '600',
+              transition: 'all 0.2s',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}
+          >
+            📦 Generar Productos
+          </button>
+        </div>
+      </div>
+
+      {/* Contenido según la vista actual */}
+      {vistaActual === 'almacenes' && (
+        <GeneradorAlmacenes 
+          onNavigateToProducts={() => setVistaActual('productos')}
+        />
+      )}
+      
+      {vistaActual === 'productos' && (
+        <GeneradorProductos 
+          onNavigateToAlmacenes={() => setVistaActual('almacenes')}
+        />
       )}
     </div>
   );
 };
 
-export default GeneradorAlmacenes;
+export default AppGeneradores;
