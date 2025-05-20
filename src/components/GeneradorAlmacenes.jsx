@@ -5,7 +5,7 @@ const GeneradorAlmacenes = ({ onNavigateToProducts }) => {
   const [estadisticas, setEstadisticas] = useState(null);
 
   const ciudadesColombia = [
-    {ciudad: "Bogotá", departamento: "Cundinamarca", latMin: 4.450, latMax: 4.850, lonMin: -74.300, lonMax: -73.900},
+    {ciudad: "Bogotá D.C.", departamento: "Cundinamarca", latMin: 4.450, latMax: 4.850, lonMin: -74.300, lonMax: -73.900},
     {ciudad: "Medellín", departamento: "Antioquia", latMin: 6.100, latMax: 6.400, lonMin: -75.800, lonMax: -75.400},
     {ciudad: "Cali", departamento: "Valle del Cauca", latMin: 3.300, latMax: 3.600, lonMin: -76.700, lonMax: -76.300},
     {ciudad: "Barranquilla", departamento: "Atlántico", latMin: 10.900, latMax: 11.100, lonMin: -74.900, lonMax: -74.700},
